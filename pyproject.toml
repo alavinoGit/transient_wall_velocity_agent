@@ -1,0 +1,14 @@
+[project]
+name = "transient-couette-agent"
+version = "0.1.0"
+description = "Implicit start-up Couette-flow solver and validation tutorial"
+requires-python = ">=3.12"
+dependencies = [
+  "numpy>=1.26,<3",
+  "matplotlib>=3.8,<4",
+]
+
+[tool.pytest.ini_options]
+addopts = "-ra"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
