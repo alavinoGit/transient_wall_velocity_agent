@@ -51,6 +51,13 @@ results/transient_velocity_profiles.png
 
 The PNG contains all 21 stored profiles on one graph with a time legend; the CSV contains numerical and analytical velocities for each time-position pair.
 
+The outputs also report the channel-scale viscous Fourier number
+`Fo_nu = nu*t/H**2`, where `nu` is kinematic viscosity, `t` is physical time
+and `H` is channel height. `Fo_nu << 1` indicates an early transient, and
+`Fo_nu` of order 1 indicates momentum has diffused across the channel scale.
+Steady-state closeness must still be quantified from the velocity-profile error,
+not inferred from `Fo_nu` alone.
+
 ## Optional AI review
 
 In a repository-aware AI chat, ask it to read `agent_specs/physics_validator.md`, inspect the project, run the three standard commands and return the required report without editing files.

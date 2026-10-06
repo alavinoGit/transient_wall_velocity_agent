@@ -29,6 +29,27 @@ def validate_inputs(
         raise ValueError("n_time_intervals must be a positive integer.")
 
 
+def fourier_viscous_number(
+    time: float | np.ndarray,
+    height: float,
+    kinematic_viscosity: float,
+) -> float | np.ndarray:
+    """Return the channel-scale viscous Fourier number, nu*time/height**2."""
+    if height <= 0:
+        raise ValueError("Channel height must be positive.")
+    if kinematic_viscosity <= 0:
+        raise ValueError("Kinematic viscosity must be positive.")
+
+    time_array = np.asarray(time, dtype=float)
+    if np.any(time_array < 0):
+        raise ValueError("Time must be non-negative.")
+
+    result = kinematic_viscosity * time_array / height**2
+    if result.ndim == 0:
+        return float(result)
+    return result
+
+
 def analytical_startup_couette(
     y: np.ndarray,
     time: float,
@@ -117,6 +138,68 @@ def solve_transient_couette(
     return y, times, velocity
 
 
+def create_transient_profile_plot(
+    y: np.ndarray,
+    times: np.ndarray,
+    velocity: np.ndarray,
+    height: float,
+    wall_velocity: float,
+    kinematic_viscosity: float,
+) -> tuple[plt.Figure, plt.Axes]:
+    """Build the transient plot with Fourier labels and the t=5 s reference."""
+    figure, axes = plt.subplots(figsize=(10, 8))
+    colour_map = plt.get_cmap("viridis")
+    fourier_numbers = fourier_viscous_number(times, height, kinematic_viscosity)
+    label_point_indices = np.rint(
+        np.linspace(0.58 * (len(y) - 1), 0.98 * (len(y) - 1), len(times))
+    ).astype(int)
+
+    for index, time in enumerate(times):
+        colour = colour_map(index / (len(times) - 1))
+        axes.plot(
+            velocity[index],
+            y,
+            color=colour,
+            linewidth=1.2,
+            label=f"t = {time:.0f} s",
+        )
+        point_index = label_point_indices[index]
+        axes.annotate(
+            rf"$\mathrm{{Fo}}_{{\nu}} = {fourier_numbers[index]:.2f}$",
+            xy=(velocity[index, point_index], y[point_index]),
+            xytext=(7, 0),
+            textcoords="offset points",
+            color=colour,
+            fontsize=6,
+            va="center",
+        )
+
+    analytical_time = 5.0
+    analytical = analytical_startup_couette(
+        y,
+        analytical_time,
+        height,
+        wall_velocity,
+        kinematic_viscosity,
+    )
+    axes.plot(
+        analytical,
+        y,
+        color="black",
+        linestyle="--",
+        linewidth=1.8,
+        label="analyt sol",
+    )
+    axes.set_xlabel("Velocity, u [m/s]")
+    axes.set_ylabel("Distance from stationary wall, y [m]")
+    axes.set_title("Start-up Couette flow: 20 time intervals")
+    axes.set_xlim(-0.02, 1.27)
+    axes.grid(True)
+    axes.legend(loc="center left", bbox_to_anchor=(1.02, 0.5), fontsize=7, ncol=1)
+    figure.tight_layout()
+    return figure, axes
+
+
 def generate_outputs(output_directory: Path | str = "results") -> dict[str, float]:
     """Run the 20-interval reference case and write CSV and PNG outputs."""
     height = 0.01
@@ -133,6 +216,11 @@ def generate_outputs(output_directory: Path | str = "results") -> dict[str, floa
         final_time=final_time,
         n_space=n_space,
         n_time_intervals=n_time_intervals,
+    )
+    fourier_numbers = fourier_viscous_number(
+        times,
+        height,
+        kinematic_viscosity,
     )
 
     output_path = Path(output_directory)
@@ -153,6 +241,7 @@ def generate_outputs(output_directory: Path | str = "results") -> dict[str, floa
             rows.append(
                 [
                     time,
+                    fourier_numbers[index],
                     y_value,
                     numerical_value,
                     analytical_value,
@@ -165,30 +254,22 @@ def generate_outputs(output_directory: Path | str = "results") -> dict[str, floa
         np.asarray(rows),
         delimiter=",",
         header=(
-            "time_s,y_m,numerical_velocity_m_per_s,"
+            "time_s,fourier_viscous_number,y_m,numerical_velocity_m_per_s,"
             "analytical_velocity_m_per_s,error_m_per_s"
         ),
         comments="",
     )
 
-    colour_map = plt.get_cmap("viridis")
-    for index, time in enumerate(times):
-        plt.plot(
-            velocity[index],
-            y,
-            color=colour_map(index / (len(times) - 1)),
-            linewidth=1.2,
-            label=f"t = {time:.0f} s",
-        )
-    plt.xlabel("Velocity, u [m/s]")
-    plt.ylabel("Distance from stationary wall, y [m]")
-    plt.title("Start-up Couette flow: 20 time intervals")
-    plt.xlim(-0.02, 1.02)
-    plt.grid(True)
-    plt.legend(loc="center left", bbox_to_anchor=(1.02, 0.5), fontsize=7, ncol=1)
-    plt.tight_layout()
-    plt.savefig(output_path / "transient_velocity_profiles.png", dpi=180)
-    plt.close()
+    figure, _ = create_transient_profile_plot(
+        y,
+        times,
+        velocity,
+        height,
+        wall_velocity,
+        kinematic_viscosity,
+    )
+    figure.savefig(output_path / "transient_velocity_profiles.png", dpi=180)
+    plt.close(figure)
 
     steady_profile = wall_velocity * y / height
     final_analytical = analytical_startup_couette(
@@ -207,6 +288,9 @@ def generate_outputs(output_directory: Path | str = "results") -> dict[str, floa
         "n_time_intervals": float(n_time_intervals),
         "time_step": final_time / n_time_intervals,
         "diffusion_time": height**2 / kinematic_viscosity,
+        "fourier_number_min": float(np.min(fourier_numbers)),
+        "fourier_number_max": float(np.max(fourier_numbers)),
+        "fourier_number_increment": float(fourier_numbers[1] - fourier_numbers[0]),
         "final_max_error_vs_analytical": float(
             np.max(np.abs(velocity[-1] - final_analytical))
         ),
@@ -226,6 +310,11 @@ def main() -> None:
     print(f"Time intervals: {int(result['n_time_intervals'])}")
     print(f"Time step: {result['time_step']:.2f} s")
     print(f"Momentum-diffusion time H^2/nu: {result['diffusion_time']:.1f} s")
+    print(
+        "Channel-scale viscous Fourier number: "
+        f"{result['fourier_number_min']:.2f} to {result['fourier_number_max']:.2f} "
+        f"(increment {result['fourier_number_increment']:.2f})"
+    )
     print(
         "Final maximum error versus analytical solution: "
         f"{result['final_max_error_vs_analytical']:.6f} m/s"

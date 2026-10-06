@@ -49,6 +49,12 @@ Delta t = 5 s
 
 Twenty intervals produce 21 stored profiles, including `t = 0` and `t = 100 s`.
 
+The channel-scale viscous Fourier number is `Fo_nu = nu*t/H**2`, where `nu` is
+kinematic viscosity, `t` is physical time and `H` is channel height. `Fo_nu << 1`
+indicates an early transient, while `Fo_nu` of order 1 indicates that momentum
+has diffused across the channel scale. Closeness to steady Couette flow must still
+be quantified from the velocity-profile error, not inferred from `Fo_nu` alone.
+
 ## Numerical method
 
 Backward Euler is used in time and centred second differences in space; the resulting tridiagonal linear system is solved at each time interval.

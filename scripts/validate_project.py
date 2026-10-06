@@ -88,6 +88,22 @@ def main() -> int:
 
     output_directory = PROJECT_ROOT / "results"
     generate_outputs(output_directory)
+    csv_data = np.genfromtxt(
+        output_directory / "transient_velocity_profiles.csv",
+        delimiter=",",
+        names=True,
+    )
+    fourier_values = np.unique(csv_data["fourier_viscous_number"])
+    expected_fourier_values = np.arange(n_time_intervals + 1) * 0.05
+    checks.append(
+        report(
+            "CSV Fourier number for all stored profiles",
+            len(fourier_values) == 21
+            and np.allclose(fourier_values, expected_fourier_values)
+            and len(csv_data) == 21 * len(y),
+            f"{len(fourier_values)} profiles, Fo_nu={fourier_values[0]:.2f}..{fourier_values[-1]:.2f}",
+        )
+    )
     output_pass = (
         (output_directory / "transient_velocity_profiles.csv").is_file()
         and (output_directory / "transient_velocity_profiles.png").is_file()
