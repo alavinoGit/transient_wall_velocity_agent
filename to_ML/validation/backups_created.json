@@ -1,0 +1,30 @@
+[
+  {
+    "original": "data/structured_data_2ML.parquet",
+    "backup": "backups/20261008T162250610058Z/data/structured_data_2ML.parquet"
+  },
+  {
+    "original": "data/structured_data_2ML.csv",
+    "backup": "backups/20261008T162250610058Z/data/structured_data_2ML.csv"
+  },
+  {
+    "original": "data/structured_data_2ML_profile_summary.csv",
+    "backup": "backups/20261008T162250610058Z/data/structured_data_2ML_profile_summary.csv"
+  },
+  {
+    "original": "data/structured_data_2ML_case_summary.json",
+    "backup": "backups/20261008T162250610058Z/data/structured_data_2ML_case_summary.json"
+  },
+  {
+    "original": "data/structured_data_2ML_metadata.json",
+    "backup": "backups/20261008T162250610058Z/data/structured_data_2ML_metadata.json"
+  },
+  {
+    "original": "data/structured_data_2ML_schema.json",
+    "backup": "backups/20261008T162250610058Z/data/structured_data_2ML_schema.json"
+  },
+  {
+    "original": "data/structured_data_2ML_manifest.csv",
+    "backup": "backups/20261008T162250610058Z/data/structured_data_2ML_manifest.csv"
+  }
+]

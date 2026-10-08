@@ -1,0 +1,138 @@
+{
+  "accepted_training_window": {
+    "criterion": "max_y(abs(u_numerical-u_analytical))/max(abs(reference_velocity), epsilon)",
+    "end_fourier_viscous_number": 0.9999999999999999,
+    "end_time_s": 100.0,
+    "exported_point_count": 918,
+    "exported_profile_count": 18,
+    "only_window_exported": true,
+    "start_fourier_viscous_number": 0.14999999999999997,
+    "start_time_s": 15.0,
+    "strict_comparison": "<",
+    "threshold": 0.05
+  },
+  "case_id": "transient_couette_reference",
+  "derived_grid": {
+    "delta_t_s": 5.0,
+    "delta_y_m": 0.0002,
+    "fourier_viscous_number_definition": "Fo_nu = nu*time/H^2",
+    "fourier_viscous_number_range_raw": [
+      0.0,
+      0.9999999999999999
+    ],
+    "numerical_diffusion_number_r": 124.99999999999999,
+    "numerical_diffusion_number_r_definition": "r = nu*dt/dy^2",
+    "reference_velocity_m_per_s": 1.0
+  },
+  "generated_at_utc": "2026-10-08T16:18:46.948247+00:00",
+  "gradient_curvature_heuristics": {
+    "coarse_label_caveat": "Heuristic only; grid convergence requires independent mesh/time-step refinement runs.",
+    "curvature_threshold": 0.1,
+    "fine_label_rule": "wall-excluded OR normalized_gradient >= threshold OR normalized_curvature >= threshold",
+    "gradient_threshold": 0.1,
+    "wall_exclusion_fraction": 0.05
+  },
+  "ml_roles": {
+    "features": [
+      "time_s",
+      "fourier_viscous_number",
+      "numerical_diffusion_number_r",
+      "y_over_gap",
+      "distance_to_nearest_wall_over_gap"
+    ],
+    "grouping_keys": [
+      "case_id",
+      "trajectory_id",
+      "profile_id"
+    ],
+    "quality_fields_not_to_use_as_inputs": [
+      "numerical_velocity_m_per_s",
+      "source_error_m_per_s",
+      "recomputed_signed_error_m_per_s",
+      "recomputed_absolute_error_m_per_s",
+      "normalized_absolute_error"
+    ],
+    "sample_weight": null,
+    "target": "analytical_velocity_m_per_s",
+    "warning": "Only one physical parameter, mesh, and timestep configuration is present; data are not suitable as proof of cross-case generalization."
+  },
+  "physical_case": {
+    "channel_gap_m": 0.01,
+    "final_time_s": 100.0,
+    "kinematic_viscosity_m2_per_s": 1e-06,
+    "lower_wall_velocity_m_per_s": 0.0,
+    "source_provenance": {
+      "channel_gap_m": "src/transient_velocity_profile.py:generate_outputs line 205",
+      "final_time_s": "src/transient_velocity_profile.py:generate_outputs line 208",
+      "kinematic_viscosity_m2_per_s": "src/transient_velocity_profile.py:generate_outputs line 207",
+      "lower_wall_velocity_m_per_s": "src/transient_velocity_profile.py:solve_transient_couette line 124",
+      "spatial_points": "src/transient_velocity_profile.py:generate_outputs line 209",
+      "spatial_scheme": "src/transient_velocity_profile.py:solve_transient_couette docstring line 106",
+      "temporal_scheme": "src/transient_velocity_profile.py:solve_transient_couette docstring line 106",
+      "time_intervals": "src/transient_velocity_profile.py:generate_outputs line 210",
+      "upper_wall_velocity_m_per_s": "src/transient_velocity_profile.py:generate_outputs line 206"
+    },
+    "spatial_points": 51,
+    "spatial_scheme": "Centered second-order finite differences",
+    "temporal_scheme": "Backward Euler",
+    "time_intervals": 20,
+    "upper_wall_velocity_m_per_s": 1.0
+  },
+  "postprocessing_policy": {
+    "csv_mirror": true,
+    "curvature_threshold": 0.1,
+    "export_only_sustained_accepted_window": true,
+    "gradient_threshold": 0.1,
+    "maximum_acceptable_normalized_profile_error": 0.05,
+    "numerical_epsilon": 1e-12,
+    "parquet_output": true,
+    "sustained_acceptance_required": true,
+    "wall_exclusion_fraction": 0.05
+  },
+  "provenance": {
+    "case_id": "policy_from_instructor",
+    "channel_gap_m": "src/transient_velocity_profile.py:generate_outputs line 205",
+    "csv_mirror": "policy_from_instructor",
+    "curvature_threshold": "policy_from_instructor",
+    "final_time_s": "src/transient_velocity_profile.py:generate_outputs line 208",
+    "fourier_viscous_number": "raw_csv_verified_against_simulation_parameters",
+    "gradient_threshold": "policy_from_instructor",
+    "input_csv": "project_file",
+    "kinematic_viscosity_m2_per_s": "src/transient_velocity_profile.py:generate_outputs line 207",
+    "lower_wall_velocity_m_per_s": "src/transient_velocity_profile.py:solve_transient_couette line 124",
+    "maximum_acceptable_normalized_profile_error": "policy_from_instructor",
+    "numerical_diffusion_number_r": "derived_from_simulation_viscosity_and_csv_dt_dy",
+    "numerical_epsilon": "policy_from_instructor",
+    "parquet_output": "policy_from_instructor",
+    "reference_velocity_m_per_s": "upper_wall_speed_magnitude_from_simulation_source",
+    "simulation_source": "project_file",
+    "spatial_points": "src/transient_velocity_profile.py:generate_outputs line 209",
+    "spatial_scheme": "src/transient_velocity_profile.py:solve_transient_couette docstring line 106",
+    "spatial_step_m": "derived_from_raw_csv_spatial_coordinates",
+    "sustained_acceptance_required": "policy_from_instructor",
+    "temporal_scheme": "src/transient_velocity_profile.py:solve_transient_couette docstring line 106",
+    "time_intervals": "src/transient_velocity_profile.py:generate_outputs line 210",
+    "timestep_s": "derived_from_raw_csv_time_coordinates",
+    "upper_wall_velocity_m_per_s": "src/transient_velocity_profile.py:generate_outputs line 206",
+    "wall_exclusion_fraction": "policy_from_instructor"
+  },
+  "schema_version": "2.0.0",
+  "source": {
+    "input_csv": "results/transient_velocity_profiles.csv",
+    "input_csv_sha256": "32450e06346194e13299a78934d3b7b0eb6fd50e4918e6fbba6ae712fdb6be98",
+    "raw_profile_count": 21,
+    "raw_rows": 1071,
+    "raw_spatial_node_count": 51,
+    "simulation_source": "src/transient_velocity_profile.py",
+    "simulation_source_sha256": "8f026eb3a4f9263260505d08e0b684a761b22b80b5a4381262f3e2dc7f6b864a",
+    "source_columns": [
+      "time_s",
+      "fourier_viscous_number",
+      "y_m",
+      "numerical_velocity_m_per_s",
+      "analytical_velocity_m_per_s",
+      "error_m_per_s"
+    ],
+    "source_row_sha256_after_read": "32450e06346194e13299a78934d3b7b0eb6fd50e4918e6fbba6ae712fdb6be98"
+  }
+}

@@ -1,0 +1,53 @@
+case_id: transient_couette_reference
+input_csv: results/transient_velocity_profiles.csv
+simulation_source: src/transient_velocity_profile.py
+reference_velocity_m_per_s: 1.0
+
+policy:
+  maximum_acceptable_normalized_profile_error: 0.05
+  sustained_acceptance_required: true
+  numerical_epsilon: 1.0e-12
+  parquet_output: true
+  csv_mirror: true
+  gradient_threshold: 0.10
+  curvature_threshold: 0.10
+  wall_exclusion_fraction: 0.05
+  export_only_sustained_accepted_window: true
+
+case_metadata:
+  channel_gap_m: 0.01
+  kinematic_viscosity_m2_per_s: 1.0e-6
+  lower_wall_velocity_m_per_s: 0.0
+  upper_wall_velocity_m_per_s: 1.0
+  timestep_s: 5.0
+  spatial_step_m: 0.0002
+  spatial_points: 51
+  time_intervals: 20
+  temporal_scheme: Backward Euler
+  spatial_scheme: Centered second-order finite differences
+  numerical_diffusion_number_r: 125.0
+
+provenance:
+  case_id: policy_from_instructor
+  input_csv: project_file
+  simulation_source: project_file
+  reference_velocity_m_per_s: simulation_source_generate_outputs
+  maximum_acceptable_normalized_profile_error: policy_from_instructor
+  sustained_acceptance_required: policy_from_instructor
+  numerical_epsilon: policy_from_instructor
+  parquet_output: policy_from_instructor
+  csv_mirror: policy_from_instructor
+  gradient_threshold: policy_from_instructor
+  curvature_threshold: policy_from_instructor
+  wall_exclusion_fraction: policy_from_instructor
+  channel_gap_m: simulation_source_generate_outputs
+  kinematic_viscosity_m2_per_s: simulation_source_generate_outputs
+  lower_wall_velocity_m_per_s: simulation_source_boundary_assignment
+  upper_wall_velocity_m_per_s: simulation_source_generate_outputs
+  timestep_s: derived_from_csv_time_coordinates
+  spatial_step_m: derived_from_csv_spatial_coordinates
+  spatial_points: raw_csv_unique_positions
+  time_intervals: raw_csv_unique_times_minus_one
+  temporal_scheme: simulation_source_solver_docstring
+  spatial_scheme: simulation_source_solver_docstring
+  numerical_diffusion_number_r: derived_from_nu_dt_dy_squared

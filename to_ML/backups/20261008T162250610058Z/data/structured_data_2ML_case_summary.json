@@ -1,0 +1,35 @@
+{
+  "acceptance_metric": "max_y(abs(u_numerical-u_analytical))/max(abs(reference_velocity), epsilon)",
+  "accepted_window_end_fourier_viscous_number": 0.9999999999999999,
+  "accepted_window_end_time_s": 100.0,
+  "accepted_window_start_fourier_viscous_number": 0.14999999999999997,
+  "accepted_window_start_time_s": 15.0,
+  "case_id": "transient_couette_reference",
+  "comparison": "strictly less than threshold",
+  "excluded_profile_count": 3,
+  "excluded_profile_policy": "Only the first sustained contiguous accepted suffix is exported. Isolated early passes and all failing profiles are excluded from pointwise and profile-summary training tables.",
+  "exported_point_count": 918,
+  "exported_profile_count": 18,
+  "first_isolated_accepted_profile": {
+    "fourier_viscous_number": 0.0,
+    "profile_id": "transient_couette_reference_profile_000",
+    "profile_max_normalized_error": 0.0,
+    "time_s": 0.0
+  },
+  "first_sustained_accepted_profile": {
+    "fourier_viscous_number": 0.14999999999999997,
+    "profile_id": "transient_couette_reference_profile_003",
+    "profile_max_normalized_error": 0.04995994360298117,
+    "time_s": 15.0
+  },
+  "generalization_ready": false,
+  "isolated_t0_excluded_from_training_rows": true,
+  "maximum_acceptable_normalized_profile_error": 0.05,
+  "mesh_refinement_conclusion": "Not established: only one spatial grid and one timestep are present.",
+  "raw_point_count": 1071,
+  "raw_profile_count": 21,
+  "reference_velocity_m_per_s": 1.0,
+  "sustained_acceptance_required": true,
+  "training_eligibility_warning": "A single physical parameter, mesh, and timestep configuration is not a generalization dataset.",
+  "training_eligible_under_threshold": true
+}

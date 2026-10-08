@@ -1,0 +1,35 @@
+Postprocessing started: 2026-10-08T16:22:47Z
+Selected source: results/transient_velocity_profiles.csv
+Source rows/profiles/nodes: 1071/21/51
+Exported sustained window: 0.14999999999999997..0.9999999999999999 Fo_nu, 15.0..100.0 s
+Exported profiles/point rows: 18/918
+First isolated accepted Fo_nu/time: 0.0/0.0
+First sustained accepted Fo_nu/time: 0.14999999999999997/15.0
+r: 125
+Source CSV SHA-256: 32450e06346194e13299a78934d3b7b0eb6fd50e4918e6fbba6ae712fdb6be98
+Primary Parquet: /workspaces/transient_wall_velocity_agent/to_ML/data/structured_data_2ML.parquet
+...........                                                              [100%]
+11 passed in 0.83s
+VALIDATION RESULT: PASS
+Export window: Fo_nu 0.15..1.00
+Parquet/CSV rows: 918
+Source checksum unchanged: True
+
+Generated package files:
+/workspaces/transient_wall_velocity_agent/to_ML/data/structured_data_2ML.csv
+/workspaces/transient_wall_velocity_agent/to_ML/data/structured_data_2ML.parquet
+/workspaces/transient_wall_velocity_agent/to_ML/data/structured_data_2ML_case_summary.json
+/workspaces/transient_wall_velocity_agent/to_ML/data/structured_data_2ML_manifest.csv
+/workspaces/transient_wall_velocity_agent/to_ML/data/structured_data_2ML_metadata.json
+/workspaces/transient_wall_velocity_agent/to_ML/data/structured_data_2ML_profile_summary.csv
+/workspaces/transient_wall_velocity_agent/to_ML/data/structured_data_2ML_schema.json
+/workspaces/transient_wall_velocity_agent/to_ML/logs/postprocess.log
+/workspaces/transient_wall_velocity_agent/to_ML/validation/backups_created.json
+/workspaces/transient_wall_velocity_agent/to_ML/validation/checksums.sha256
+/workspaces/transient_wall_velocity_agent/to_ML/validation/discovery_report.md
+/workspaces/transient_wall_velocity_agent/to_ML/validation/repository_status_before.json
+/workspaces/transient_wall_velocity_agent/to_ML/validation/test_result.json
+/workspaces/transient_wall_velocity_agent/to_ML/validation/validation_metrics.json
+/workspaces/transient_wall_velocity_agent/to_ML/validation/validation_report.md
+
+FINAL STATUS: PASS

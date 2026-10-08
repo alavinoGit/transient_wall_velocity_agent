@@ -1,0 +1,50 @@
+{
+  "Fo_nu_min_max_increment_raw": [
+    0.0,
+    0.9999999999999999,
+    0.049999999999999996
+  ],
+  "accepted_window_end_Fo_nu": 0.9999999999999999,
+  "accepted_window_end_time_s": 100.0,
+  "backward_euler_max_discrete_residual": 1.1191050121100651e-14,
+  "checks": {
+    "Fo_nu_and_r": true,
+    "accepted_window_only_export": true,
+    "analytical_reference_all_profiles": true,
+    "boundary_initial_conditions": true,
+    "boundedness_and_monotonicity": true,
+    "discrete_momentum_balance": true,
+    "manifest_checksums": true,
+    "point_csv_parquet_equivalence": true,
+    "profile_summary_consistency": true,
+    "repository_isolation": true,
+    "schema_and_target_leakage": true,
+    "steady_limit": true,
+    "temporal_refinement": true
+  },
+  "excluded_profiles": 3,
+  "exported_profiles": 18,
+  "exported_rows_each_format": 918,
+  "final_source_sha256": "32450e06346194e13299a78934d3b7b0eb6fd50e4918e6fbba6ae712fdb6be98",
+  "final_steady_profile_error_m_per_s": 0.00020926270556043125,
+  "first_isolated_accepted_Fo_nu": 0.0,
+  "first_isolated_accepted_time_s": 0.0,
+  "first_sustained_accepted_Fo_nu": 0.14999999999999997,
+  "first_sustained_accepted_time_s": 15.0,
+  "initial_source_sha256": "32450e06346194e13299a78934d3b7b0eb6fd50e4918e6fbba6ae712fdb6be98",
+  "limitation": "Only one physical case, mesh, and timestep are available; mesh sensitivity and coarsening safety are unproven.",
+  "maximum_accepted_profile_error_fraction": 0.04995994360298117,
+  "package_tests_passed": true,
+  "r": 124.99999999999999,
+  "raw_profiles": 21,
+  "raw_rows": 1071,
+  "repository_external_status_unchanged": true,
+  "selected_input": "results/transient_velocity_profiles.csv",
+  "source_checksum_unchanged": true,
+  "spatial_nodes": 51,
+  "status": "PASS",
+  "temporal_refinement_final_errors_m_per_s": {
+    "20_intervals": 0.000176334702533254,
+    "40_intervals": 6.122428789290257e-05
+  }
+}
